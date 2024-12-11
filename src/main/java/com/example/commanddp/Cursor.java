@@ -8,25 +8,29 @@ import javafx.scene.shape.Rectangle;
 public class Cursor {
     private int x = 0;
     private int y = 0;
-    private int rows = 8;
-    private int columns = 8;
+    private final int rows = 8;
+    private final int columns = 8;
     private int pixels[][] = new int[rows][columns];
     private GridPane gridPane = new GridPane();
 
+    private final static Color HIGHLIGHTED_COLOR = Color.DEEPPINK;
+    private final static Color SELECTED_COLOR = Color.BLACK;
+    private final static Color NOT_SELECTED_COLOR = Color.WHITE;
+
     public Cursor() {
-        initializeGrid();
+        initialize();
     }
 
-    private void initializeGrid() {
+    private void initialize() {
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
                 Rectangle rectangle = new Rectangle(60, 55);
-                rectangle.setFill(Color.WHITE);
-                rectangle.setStroke(Color.BLACK);
+                rectangle.setFill(NOT_SELECTED_COLOR);
+                rectangle.setStroke(SELECTED_COLOR);
+                rectangle.setStrokeWidth(3.0);
                 gridPane.add(rectangle, column, row);
             }
         }
-
         updateCursor();
     }
 
@@ -37,7 +41,6 @@ public class Cursor {
             x = newX;
             y = newY;
         }
-
         updateCursor();
     }
 
@@ -50,17 +53,16 @@ public class Cursor {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof Rectangle) {
                 Rectangle rectangle = (Rectangle) node;
-                rectangle.setStroke(Color.BLACK);
+                rectangle.setStroke(SELECTED_COLOR);
             }
         }
-
         Rectangle rectangle = (Rectangle) gridPane.getChildren().get(y * columns + x);
-        rectangle.setStroke(Color.RED);
+        rectangle.setStroke(HIGHLIGHTED_COLOR);
     }
 
     private void updateCell(int x, int y) {
         Rectangle rectangle = (Rectangle) gridPane.getChildren().get(y * columns + x);
-        rectangle.setFill(pixels[x][y] == 1 ? Color.BLACK : Color.WHITE);
+        rectangle.setFill(pixels[x][y] == 1 ? SELECTED_COLOR : NOT_SELECTED_COLOR);
     }
 
     public void generateCode() {
