@@ -32,16 +32,23 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(root, 500, 500);
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
-            if (code == KeyCode.UP) {
-                new MoveCursorUpCommand(editor).execute();
-            } else if (code == KeyCode.DOWN) {
-                new MoveCursorDownCommand(editor).execute();
-            } else if (code == KeyCode.LEFT) {
-                new MoveCursorLeftCommand(editor).execute();
-            } else if (code == KeyCode.RIGHT) {
-                new MoveCursorRightCommand(editor).execute();
-            } else if (code == KeyCode.SPACE) {
-                new TogglePixelCommand(editor).execute();
+
+            switch (code) {
+                case UP:
+                    new MoveCursorUpCommand(editor).execute();
+                    break;
+                case DOWN:
+                    new MoveCursorDownCommand(editor).execute();
+                    break;
+                case LEFT:
+                    new MoveCursorLeftCommand(editor).execute();
+                    break;
+                case RIGHT:
+                    new MoveCursorRightCommand(editor).execute();
+                    break;
+                case SPACE:
+                    new TogglePixelCommand(editor).execute();
+                    break;
             }
         });
 
